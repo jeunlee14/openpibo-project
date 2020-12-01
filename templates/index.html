@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OPENPIBO-HOME</title>
+</head>
+<body>
+  <div style="border-radius:10px/10px;text-align:center;background:#9ffafa;">
+    <h2>PIBO Remote Controller</h2>
+  </div>
+  <h3>* 입력</h3>
+  <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <form action="/command" method="post">
+      <b><i>Command to PIBO:</b></i><br>
+      <input type="text" name="command" size=50% />
+      <input type="submit" value="SEND" />
+    </form>
+    <pre>
+    * Command Example
+     - (오늘|내일) 날씨 알려줘
+     - (경제|정치|연예) 뉴스 알려줘
+     - 사진 찍어줘
+     - 일정 초기화
+     - (오늘|내일) 일정 알려줘|조회
+     - 일정등록:2020/11/27:집안 청소 하기
+     - 일정삭제:2020/11/27:1
+     - (앞으로|뒤로|왼쪽으로|오른쪽으로) 가
+    </pre>
+  </div>
+  <h3>* 결과</h3>
+  <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <b><i>User :</b></i>  {{ command }} <br>
+    <b><i>PIBO :</b></i>  {{  result }} <br>
+  </div>
+  <br>
+  <div style="text-align:center;border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <img src="data:image/jpeg;base64, {{image}}">
+  </div>
+</body>
+</html>
