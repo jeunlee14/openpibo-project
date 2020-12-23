@@ -15,7 +15,7 @@ motion_db = {
 
 class Pibo_Control:
   def __init__(self):
-    self.pd = Pibo_Device(self.check_device)
+    self.pd = Pibo_Device(func=self.check_device)
     self.bot_db = {
       "날씨": pe.weather_bot,
       "뉴스": pe.news_bot,
@@ -51,5 +51,5 @@ class Pibo_Control:
     if matched == False:
       answer = self.pd.chat(string)
     
-    self.pd.speak(answer)
+    #self.pd.speak(answer)
     return answer

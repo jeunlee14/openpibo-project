@@ -1,4 +1,4 @@
-import sys
+import sys, time
 from utils.config import Config as cfg
 sys.path.append(cfg.OPENPIBO_PATH + '/lib')
 
@@ -12,6 +12,8 @@ from vision.visionlib import cCamera
 from vision.visionlib import cFace
 from vision.visionlib import cDetect
 
+from threading import Thread, Lock
+
 class Pibo_Device:
   def __init__(self, func=None):
     self.play_filename = '/home/pi/openpibo-final/data/tts.mp3'
@@ -23,10 +25,36 @@ class Pibo_Device:
     self.FA = cFace(conf=cfg)
     self.DT = cDetect(conf=cfg)
     self.T = cSpeech(conf=cfg)
-    self.H = cDevice(func).start()
-    self.H.send_cmd(self.H.VERSION)
-    self.H.send_cmd(self.H.PIR, "on")
+    self.H = cDevice()
+    self.H.send_cmd(self.H.code['VERSION'])
+    self.H.send_cmd(self.H.code['PIR'], "on")
     self.display_oled('/home/pi/openpibo-final/bot_icon/pibo_logo_b.png')
+    self.next_cmd = [False, ""]
+    self.func = func
+    t = Thread(target=self.update, args=())
+    t.daemon = True
+    t.start()
+
+  def update(self):
+    self.system_check_time = time.time()
+    self.battery_check_time = time.time()
+
+    while True:
+      if self.next_cmd[0] == True:
+        data = self.H.send_raw(self.next_cmd[1])
+        self.func(data)
+
+      if time.time() - self.system_check_time > 1:  # 시스템 메시지 1초 간격 전송
+        data = self.H.send_cmd(self.H.code['SYSTEM'])
+        self.func(data)
+        self.system_check_time = time.time()
+
+      if time.time() - self.battery_check_time > 10: # 배터리 메시지 10초 간격 전송
+        data = self.H.send_cmd(self.H.code['BATTERY'])
+        self.func(data)
+        self.battery_check_time = time.time()
+
+      time.sleep(0.1)
 
   def display_oled(self, filename):
     self.O.draw_image(filename)
