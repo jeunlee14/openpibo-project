@@ -1,8 +1,9 @@
 import sys
-sys.path.append("/home/pi/openpibo/lib")
+from utils.config import Config as cfg
+sys.path.append(cfg.OPENPIBO_PATH + '/lib')
 
-from text.textlib import cText
-from text.textlib import cDialog
+from speech.speechlib import cSpeech
+from speech.speechlib import cDialog
 from audio.audiolib import cAudio
 from oled.oledlib import cOled
 from motion.motionlib import cMotion
@@ -14,14 +15,14 @@ from vision.visionlib import cDetect
 class Pibo_Device:
   def __init__(self, func=None):
     self.play_filename = '/home/pi/openpibo-final/data/tts.mp3'
-    self.D = cDialog()
+    self.D = cDialog(conf=cfg)
     self.A = cAudio()
-    self.O = cOled()
-    self.M = cMotion()
+    self.O = cOled(conf=cfg)
+    self.M = cMotion(conf=cfg)
     self.CA = cCamera()
-    self.FA = cFace()
-    self.DT = cDetect()
-    self.T = cText(google_account="/home/pi/piboproject-d783ed0496cb.json")
+    self.FA = cFace(conf=cfg)
+    self.DT = cDetect(conf=cfg)
+    self.T = cSpeech(conf=cfg)
     self.H = cDevice(func).start()
     self.H.send_cmd(self.H.VERSION)
     self.H.send_cmd(self.H.PIR, "on")
