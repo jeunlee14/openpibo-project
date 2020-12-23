@@ -65,8 +65,7 @@ class Pibo_Device:
 
   def speak(self, string):
     self.T.tts(string, self.play_filename, 'ko')
-    self.A.set_config(volume=-1500)
-    self.A.play(self.play_filename)
+    self.A.play(self.play_filename, volume=-1500)
 
   def picture(self, string):
     img = self.CA.read()
