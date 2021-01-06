@@ -50,6 +50,6 @@ class Pibo_Control:
     print('match : {}, string : {}'.format(matched, string))
     if matched == False:
       answer = self.pd.chat(string)
-    
-    #self.pd.speak(answer)
+
+    self.pd.speak(answer)
     return answer
