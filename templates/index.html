@@ -3,6 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>OPENPIBO-HOME</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.5/socket.io.js'></script>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+    $(function(){
+      var socket = io();
+
+      $('#command').keypress(function(d){
+        if (d.charCode != 13)
+          return;
+
+        $('#command_val').text($('#command').val())
+        socket.emit('command', $('#command').val())
+      });
+
+      socket.on('img', function(data){
+        $('#image').attr('src', 'data:image/jpeg;charset=utf-8;base64,'+data);
+      });
+
+      socket.on('result', function(data){
+        $('#result_val').text(data)
+      });
+    });
+  </script>
 </head>
 <body>
   <div style="border-radius:10px/10px;text-align:center;background:#9ffafa;">
@@ -10,11 +33,8 @@
   </div>
   <h3>* 입력</h3>
   <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
-    <form action="/command" method="post">
-      <b><i>Command to PIBO:</b></i><br>
-      <input type="text" name="command" size=50% />
-      <input type="submit" value="SEND" />
-    </form>
+    <b><i>Command to PIBO:</b></i><br>
+    <input type="text" id="command" size=50% />
     <pre>
     * Command Example
      - (오늘|내일) 날씨 알려줘
@@ -29,12 +49,12 @@
   </div>
   <h3>* 결과</h3>
   <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
-    <b><i>User :</b></i>  {{ command }} <br>
-    <b><i>PIBO :</b></i>  {{  result }} <br>
+    <b><i>User :</b></i>  <span id='command_val'></span> <br>
+    <b><i>PIBO :</b></i>  <span id='result_val'></span> <br>
   </div>
   <br>
   <div style="text-align:center;border-radius:10px/10px;border:1px dotted; padding:10px;">
-    <img src="data:image/jpeg;base64, {{image}}">
+    <img id='image'>
   </div>
 </body>
 </html>

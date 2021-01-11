@@ -51,5 +51,5 @@ class Pibo_Control:
     if matched == False:
       answer = self.pd.chat(string)
 
-    self.pd.speak(answer)
+    self.pd.speak('<speak>'+answer+'</speak>')
     return answer
