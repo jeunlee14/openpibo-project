@@ -15,7 +15,7 @@ news_keys = {
   '연예':'http://fs.jtbc.joins.com/RSS/entertainment.xml',
 }
 
-CALENDAR_PATH = '/home/pi/openpibo-final/data/calendar_db'
+CALENDAR_PATH = '/home/pi/openpibo-project/final/data/calendar_db'
 
 def weather_bot(string=None, voice=False):
   return_text = ''

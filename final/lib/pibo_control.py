@@ -1,5 +1,5 @@
 import sys
-sys.path.append("/home/pi/openpibo-final/lib")
+sys.path.append("/home/pi/openpibo-project/final/lib")
 
 from pibo_device import Pibo_Device
 import pibo_extend as pe
@@ -26,11 +26,11 @@ class Pibo_Control:
   def check_device(self, s):
     arr = s.split(':')
     if 'touch' in arr[1]:
-      self.pd.display_oled('/home/pi/openpibo-final/bot_icon/pibo_hear.png')
+      self.pd.display_oled('/home/pi/openpibo-project/final/bot_icon/pibo_hear.png')
       ret = self.pd.listen(lang='ko-KR')
       if len(ret) > 0:
         self.decode_func(ret[0], voice=True)
-        self.pd.display_oled('/home/pi/openpibo-final/bot_icon/pibo_logo_b.png')
+        self.pd.display_oled('/home/pi/openpibo-project/final/bot_icon/pibo_logo_b.png')
 
   def decode_func(self, string ="오늘 날씨 알려줘", voice=False):
     matched, answer = False, ''

@@ -16,7 +16,7 @@ from threading import Thread, Lock
 
 class Pibo_Device:
   def __init__(self, func=None):
-    self.play_filename = '/home/pi/openpibo-final/data/tts.mp3'
+    self.play_filename = '/home/pi/openpibo-project/final/data/tts.mp3'
     self.D = cDialog(conf=cfg)
     self.A = cAudio()
     self.O = cOled(conf=cfg)
@@ -28,7 +28,7 @@ class Pibo_Device:
     self.H = cDevice()
     self.H.send_cmd(self.H.code['VERSION'])
     self.H.send_cmd(self.H.code['PIR'], "on")
-    self.display_oled('/home/pi/openpibo-final/bot_icon/pibo_logo_b.png')
+    self.display_oled('/home/pi/openpibo-project/final/bot_icon/pibo_logo_b.png')
     self.next_cmd = [False, ""]
     self.func = func
     t = Thread(target=self.update, args=())
@@ -83,7 +83,7 @@ class Pibo_Device:
       self.CA.rectangle(ret_img, (x1,y1), (x2,y2), color=(30,30,128), tickness=2)
       self.CA.putText(ret_img, label, (x1+15, y1+15), size=0.5, color=(128,30,30), tickness=2)
 
-    self.CA.imwrite('/home/pi/openpibo-final/images/photo.jpg', ret_img)
+    self.CA.imwrite('/home/pi/openpibo-project/final/images/photo.jpg', ret_img)
     return "사진촬영했어요"
 
   def analyze_sentence(self, string):
