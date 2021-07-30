@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>OPENPIBO-HOME</title>
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.5/socket.io.js'></script>
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script>
+    $(function(){
+      var socket = io();
+      // Motion
+      $('#forward').click(() => {
+        socket.emit('motion', 'forward1')
+      });
+      
+      $('#backward').click(() => {
+        socket.emit('motion', 'backward1')
+      });
+      
+      $('#left').click(() => {
+        socket.emit('motion', 'left')
+      });
+      
+      $('#right').click(() => {
+        socket.emit('motion', 'right')
+      });
+      
+      $('#cheer').click(() => {
+        socket.emit('motion', 'cheer1')
+      });
+      
+      $('#dance1').click(() => {
+        socket.emit('motion', 'dance1')
+      });
+      
+      $('#dance2').click(() => {
+        socket.emit('motion', 'dance2')
+      });
+      
+      $('#dance3').click(() => {
+        socket.emit('motion', 'dance3')
+      });
+      
+      $('#dance4').click(() => {
+        socket.emit('motion', 'dance4')
+      });
+      
+      $('#dance5').click(() => {
+        socket.emit('motion', 'dance5')
+      });
+      
+      // Audio
+      $('#music1').click(() => {
+        socket.emit('music', "/test.mp3")
+      });
+      
+      $('#stop').click(() => {
+        socket.emit('music', 'stop')
+      });
+      
+      // Neopixel
+      $('#neopixel').keypress((key) => {
+        if (key.charCode == 13) {
+          socket.emit('color', $('#neopixel').val())
+          $('#neopixel').val('')
+        }
+      });
+      
+      $('#neopixel_btn').click(() => {
+        socket.emit('color', $('#neopixel').val())
+        $('#neopixel').val('')
+      });
+      
+      // Speech
+      $('#speech').keypress((key) => {
+        if (key.charCode == 13) {
+          socket.emit('speech', $('#speech').val())
+          $('#speech').val('')
+        }
+      });
+      
+      $('#speech_btn').click(() => {
+        socket.emit('speech', $('#speech').val())
+        $('#speech').val('')
+      });
+      
+      // Vision
+      $('#camera_on').click(() => {
+          socket.emit('camera', true)
+      });
+
+      $('#camera_off').click(() => {
+          socket.emit('camera', false)
+      });
+    })
+  </script>
+</head>
+<body>
+  <div style="border-radius:10px/10px;text-align:center;background:#9ffafa;">
+    <h2>PIBO 리모컨</h2>
+  </div>
+  <h3> 모션 </h3>
+  <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <button id='forward'>앞으로</button>
+    <button id='backward'>뒤로</button>
+    <button id='left'>왼쪽으로</button>
+    <button id='right'>오른쪽으로</button>
+    <button id='cheer'>응원</button>
+    <button id='dance1'>춤1</button>
+    <button id='dance2'>춤2</button>
+    <button id='dance3'>춤3</button>
+    <button id='dance4'>춤4</button>
+    <button id='dance5'>춤5</button>
+  </div>
+  <h3> 음악 </h3>
+  <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <button id='music1'>재생</button>
+    <button id='stop'>중지</button>
+  </div>
+  <h3> 눈 </h3>
+  <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <input type="text" id="neopixel">
+    <button id='neopixel_btn'>색 변경</button>
+  </div>
+  <h3> 말하기 </h3>
+  <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <input type="text" id="speech">
+    <button id='speech_btn'>말하기</button>
+  </div>
+  <h3> 카메라 </h3>
+  <div style="border-radius:10px/10px;border:1px dotted; padding:10px;">
+    <button id='camera_on'>카메라 on</button>
+    <button id='camera_off'>카메라 off</button>
+  </div>
+</body>
+</html>
